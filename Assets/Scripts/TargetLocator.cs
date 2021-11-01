@@ -5,20 +5,55 @@ using UnityEngine;
 public class TargetLocator : MonoBehaviour
 {
     [SerializeField] Transform turretWeapon;
+    [SerializeField] ParticleSystem projectileParticles;
+    [SerializeField] float rangeTurret = 15f;
     Transform enemyTarget;
-
-    void Start()
-    {
-        enemyTarget = FindObjectOfType<EnemyMover>().transform;
-    }
 
     void Update()
     {
+        FindClosestTarget();
         AimTurretWeapon();
+    }
+
+    void FindClosestTarget()
+    {
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        Transform closestTarget = null;
+        float maxDistance = Mathf.Infinity;
+
+        foreach(Enemy enemy in enemies)
+        {
+            float targetDistance = Vector3.Distance(transform.position, enemy.transform.position);
+
+            if(targetDistance < maxDistance)
+            {
+                closestTarget = enemy.transform;
+                maxDistance = targetDistance;
+            }
+        }
+
+        enemyTarget = closestTarget;
     }
 
     void AimTurretWeapon()
     {
+        float targetDistance = Vector3.Distance(transform.position, enemyTarget.position);
+
         turretWeapon.LookAt(enemyTarget);
+
+        if(targetDistance < rangeTurret)
+        {
+            Attack(true);
+        }
+        else
+        {
+            Attack(false);
+        }
+    }
+
+    void Attack(bool isActive)
+    {
+        var emissionModule = projectileParticles.emission;
+        emissionModule.enabled = isActive;
     }
 }
