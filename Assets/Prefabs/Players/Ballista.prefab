@@ -865,7 +865,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.75
+      scalar: 0.6
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4865,7 +4865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccddce1078ca60e4c8293fce4765ee55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerCost: 75
+  towerCost: 100
 --- !u!1 &6131056645070147807
 GameObject:
   m_ObjectHideFlags: 0
